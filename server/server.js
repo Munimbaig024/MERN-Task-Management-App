@@ -15,6 +15,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Routes
+app.use('/api/auth', require('./routes/authRoutes'));
+
 // Health check route
 app.get('/', (req, res) => {
   res.json({ message: 'TaskFlow API is running' });
