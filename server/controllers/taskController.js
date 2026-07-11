@@ -1,5 +1,32 @@
 const Task = require('../models/Task');
 
+// @desc    Get all tasks for logged-in user (with pagination)
+// @route   GET /api/tasks
+// @access  Private
+const getTasks = async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const total = await Task.countDocuments({ user: req.user._id });
+
+    const tasks = await Task.find({ user: req.user._id })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    res.json({
+      tasks,
+      page,
+      totalPages: Math.ceil(total / limit),
+      totalTasks: total,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // @desc    Create a new task
 // @route   POST /api/tasks
 // @access  Private
@@ -25,4 +52,5 @@ const createTask = async (req, res) => {
   }
 };
 
-module.exports = { createTask };
+module.exports = { getTasks, createTask };
+
