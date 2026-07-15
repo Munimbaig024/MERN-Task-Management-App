@@ -91,12 +91,22 @@ npm run dev
 - [x] Login endpoint (`POST /api/auth/login`)
 - [x] Auth middleware for protected routes
 
-### 🔜 Phase 2 — Backend Features
-- [ ] Task CRUD routes
-- [ ] Centralized error handling
-- [ ] Input validation with express-validator
+### ✅ Phase 2 — Backend Features (Complete)
+- [x] Create task route (`POST /api/tasks`)
+- [x] Get all tasks with pagination (`GET /api/tasks?page=1&limit=10`)
+- [x] Update task route (`PUT /api/tasks/:id`)
+- [x] Delete task route (`DELETE /api/tasks/:id`)
+- [x] Centralized error handling middleware
+- [x] Input validation with express-validator
 
 ### 🔜 Phase 3 — Frontend Foundation
+- [ ] React app scaffold with Vite
+- [ ] React Router and page skeletons
+- [ ] AuthContext and token storage
+- [ ] Login page UI
+- [ ] Register page UI
+- [ ] Dashboard layout and protected route wrapper
+
 ### 🔜 Phase 4 — Frontend Features
 ### 🔜 Phase 5 — Polish & Testing
 

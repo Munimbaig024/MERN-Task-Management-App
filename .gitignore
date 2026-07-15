@@ -3,6 +3,4 @@ node_modules/
 dist/
 build/
 .DS_Store
-TaskFlow-Commit-Plan.md
-TaskFlow-Design-Doc.md
 
