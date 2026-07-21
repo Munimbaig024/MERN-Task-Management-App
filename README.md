@@ -99,15 +99,23 @@ npm run dev
 - [x] Centralized error handling middleware
 - [x] Input validation with express-validator
 
-### 🔜 Phase 3 — Frontend Foundation
-- [ ] React app scaffold with Vite
-- [ ] React Router and page skeletons
-- [ ] AuthContext and token storage
-- [ ] Login page UI
-- [ ] Register page UI
-- [ ] Dashboard layout and protected route wrapper
+### ✅ Phase 3 — Frontend Foundation (Complete)
+- [x] React app scaffold with Vite
+- [x] React Router and page skeletons
+- [x] AuthContext and token storage
+- [x] Login page UI and form handling
+- [x] Register page UI and form handling
+- [x] Dashboard layout and protected route wrapper
 
 ### 🔜 Phase 4 — Frontend Features
+- [ ] Task list component
+- [ ] Task create/edit form component
+- [ ] Task delete with confirm modal
+- [ ] Connect frontend to backend via axios instance
+- [ ] Tailwind setup and theme pass
+- [ ] Loading states and toast notifications
+- [ ] Task filtering and sorting by status/due date
+
 ### 🔜 Phase 5 — Polish & Testing
 
 ---
