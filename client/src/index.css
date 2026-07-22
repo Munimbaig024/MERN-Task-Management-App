@@ -235,3 +235,196 @@ body {
   color: #94a3b8;
   font-size: 1rem;
 }
+
+/* Dashboard header row */
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.btn-new-task {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+}
+
+/* Task list */
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Task item */
+.task-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  background: #0f1117;
+  border: 1px solid #2d3148;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  transition: border-color 0.2s;
+}
+
+.task-item:hover {
+  border-color: #6366f1;
+}
+
+.task-item-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.task-item-top {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.task-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.task-description {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+.task-due {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.task-due.overdue {
+  color: #f87171;
+}
+
+/* Status badges */
+.status-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.badge-todo {
+  background: #1e293b;
+  color: #94a3b8;
+  border: 1px solid #334155;
+}
+
+.badge-inprogress {
+  background: #1e3a5f;
+  color: #60a5fa;
+  border: 1px solid #2563eb;
+}
+
+.badge-done {
+  background: #14532d;
+  color: #4ade80;
+  border: 1px solid #16a34a;
+}
+
+/* Task action buttons */
+.task-item-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.btn-edit {
+  background: transparent;
+  border: 1px solid #2d3148;
+  color: #94a3b8;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-edit:hover {
+  border-color: #6366f1;
+  color: #6366f1;
+}
+
+.btn-delete {
+  background: transparent;
+  border: 1px solid #2d3148;
+  color: #94a3b8;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-delete:hover {
+  border-color: #f87171;
+  color: #f87171;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #475569;
+}
+
+.empty-state p {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+
+.empty-state span {
+  font-size: 0.9rem;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.btn-page {
+  background: transparent;
+  border: 1px solid #2d3148;
+  color: #94a3b8;
+  padding: 0.4rem 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-page:hover:not(:disabled) {
+  border-color: #6366f1;
+  color: #6366f1;
+}
+
+.btn-page:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.page-info {
+  color: #64748b;
+  font-size: 0.85rem;
+}
