@@ -1,18 +1,35 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import TaskList from '../components/TaskList';
+import TaskForm from '../components/TaskForm';
 
 function Dashboard() {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const [showForm, setShowForm] = useState(false);
+  const [taskToEdit, setTaskToEdit] = useState(null);
+
+  const handleNewTask = () => {
+    setTaskToEdit(null);
+    setShowForm(true);
+  };
 
   const handleEdit = (task) => {
-    // TaskForm integration added in Task 23
-    console.log('Edit task:', task);
+    setTaskToEdit(task);
+    setShowForm(true);
   };
 
   const handleDelete = (task) => {
     // Delete modal added in Task 24
     console.log('Delete task:', task);
+  };
+
+  const handleFormSuccess = () => {
+    setRefreshTrigger((prev) => prev + 1);
+  };
+
+  const handleFormClose = () => {
+    setShowForm(false);
+    setTaskToEdit(null);
   };
 
   return (
@@ -24,8 +41,11 @@ function Dashboard() {
             <h1>My Tasks</h1>
             <p className="dashboard-subtitle">Manage and track your tasks</p>
           </div>
-          <button className="btn-primary btn-new-task">+ New Task</button>
+          <button className="btn-primary btn-new-task" onClick={handleNewTask}>
+            + New Task
+          </button>
         </div>
+
         <div className="dashboard-content">
           <TaskList
             onEdit={handleEdit}
@@ -34,6 +54,14 @@ function Dashboard() {
           />
         </div>
       </main>
+
+      {showForm && (
+        <TaskForm
+          taskToEdit={taskToEdit}
+          onSuccess={handleFormSuccess}
+          onClose={handleFormClose}
+        />
+      )}
     </div>
   );
 }
