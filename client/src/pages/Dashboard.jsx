@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import TaskList from '../components/TaskList';
 import TaskForm from '../components/TaskForm';
+import DeleteModal from '../components/DeleteModal';
 
 function Dashboard() {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [showForm, setShowForm] = useState(false);
   const [taskToEdit, setTaskToEdit] = useState(null);
+  const [taskToDelete, setTaskToDelete] = useState(null);
 
   const handleNewTask = () => {
     setTaskToEdit(null);
@@ -19,8 +21,7 @@ function Dashboard() {
   };
 
   const handleDelete = (task) => {
-    // Delete modal added in Task 24
-    console.log('Delete task:', task);
+    setTaskToDelete(task);
   };
 
   const handleFormSuccess = () => {
@@ -30,6 +31,14 @@ function Dashboard() {
   const handleFormClose = () => {
     setShowForm(false);
     setTaskToEdit(null);
+  };
+
+  const handleDeleteSuccess = () => {
+    setRefreshTrigger((prev) => prev + 1);
+  };
+
+  const handleDeleteClose = () => {
+    setTaskToDelete(null);
   };
 
   return (
@@ -60,6 +69,14 @@ function Dashboard() {
           taskToEdit={taskToEdit}
           onSuccess={handleFormSuccess}
           onClose={handleFormClose}
+        />
+      )}
+
+      {taskToDelete && (
+        <DeleteModal
+          task={taskToDelete}
+          onSuccess={handleDeleteSuccess}
+          onClose={handleDeleteClose}
         />
       )}
     </div>

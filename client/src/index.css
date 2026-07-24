@@ -561,3 +561,47 @@ body {
   border-color: #6366f1;
   color: #e2e8f0;
 }
+
+/* Delete modal */
+.modal-card--sm {
+  max-width: 380px;
+}
+
+.delete-message {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.delete-message small {
+  color: #64748b;
+  font-size: 0.82rem;
+}
+
+.delete-task-name {
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.btn-danger:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-danger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
