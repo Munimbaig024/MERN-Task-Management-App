@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api/axiosInstance';
 import { useAuth } from '../context/AuthContext';
 import TaskItem from './TaskItem';
 import toast from 'react-hot-toast';
@@ -14,9 +14,7 @@ function TaskList({ onEdit, onDelete, refreshTrigger }) {
   const fetchTasks = async (currentPage = 1) => {
     setLoading(true);
     try {
-      const { data } = await axios.get(`/api/tasks?page=${currentPage}&limit=10`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const { data } = await api.get(`/tasks?page=${currentPage}&limit=10`);
       setTasks(data.tasks);
       setTotalPages(data.totalPages);
       setPage(currentPage);

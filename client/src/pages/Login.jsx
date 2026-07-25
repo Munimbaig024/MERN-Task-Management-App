@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api/axiosInstance';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 
@@ -20,7 +20,7 @@ function Login() {
     setLoading(true);
 
     try {
-      const { data } = await axios.post('/api/auth/login', formData);
+      const { data } = await api.post('/auth/login', formData);
       login({ _id: data._id, name: data.name, email: data.email }, data.token);
       toast.success(`Welcome back, ${data.name}!`);
       navigate('/dashboard');

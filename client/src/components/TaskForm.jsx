@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api/axiosInstance';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 
@@ -50,14 +50,10 @@ function TaskForm({ taskToEdit, onSuccess, onClose }) {
 
     try {
       if (isEdit) {
-        await axios.put(`/api/tasks/${taskToEdit._id}`, payload, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        await api.put(`/tasks/${taskToEdit._id}`, payload);
         toast.success('Task updated!');
       } else {
-        await axios.post('/api/tasks', payload, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        await api.post('/tasks', payload);
         toast.success('Task created!');
       }
       onSuccess();

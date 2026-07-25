@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api/axiosInstance';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 
@@ -10,9 +10,7 @@ function DeleteModal({ task, onSuccess, onClose }) {
   const handleDelete = async () => {
     setLoading(true);
     try {
-      await axios.delete(`/api/tasks/${task._id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await api.delete(`/tasks/${task._id}`);
       toast.success('Task deleted');
       onSuccess();
       onClose();
