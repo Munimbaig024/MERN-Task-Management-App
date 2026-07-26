@@ -1,7 +1,7 @@
 const Task = require('../models/Task');
 
-// @desc    Get all tasks for logged-in user (with pagination)
-// @route   GET /api/tasks
+// @desc    Get all tasks for logged-in user (with pagination, filtering, sorting)
+// @route   GET /api/tasks?page=1&limit=10&status=todo&sortBy=dueDate_asc
 // @access  Private
 const getTasks = async (req, res) => {
   try {
@@ -9,10 +9,26 @@ const getTasks = async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
 
-    const total = await Task.countDocuments({ user: req.user._id });
+    // Build filter query
+    const filter = { user: req.user._id };
+    if (req.query.status && req.query.status !== 'all') {
+      filter.status = req.query.status;
+    }
 
-    const tasks = await Task.find({ user: req.user._id })
-      .sort({ createdAt: -1 })
+    // Build sort options
+    let sortOptions = { createdAt: -1 }; // default: newest first
+    if (req.query.sortBy === 'dueDate_asc') {
+      sortOptions = { dueDate: 1, createdAt: -1 };
+    } else if (req.query.sortBy === 'dueDate_desc') {
+      sortOptions = { dueDate: -1, createdAt: -1 };
+    } else if (req.query.sortBy === 'createdAt_asc') {
+      sortOptions = { createdAt: 1 };
+    }
+
+    const total = await Task.countDocuments(filter);
+
+    const tasks = await Task.find(filter)
+      .sort(sortOptions)
       .skip(skip)
       .limit(limit);
 
