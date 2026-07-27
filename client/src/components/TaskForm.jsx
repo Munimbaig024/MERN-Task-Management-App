@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api/axiosInstance';
 import toast from 'react-hot-toast';
-import { useAuth } from '../context/AuthContext';
 
 function TaskForm({ taskToEdit, onSuccess, onClose }) {
-  const { token } = useAuth();
   const isEdit = !!taskToEdit;
 
   const [formData, setFormData] = useState({
@@ -51,15 +49,15 @@ function TaskForm({ taskToEdit, onSuccess, onClose }) {
     try {
       if (isEdit) {
         await api.put(`/tasks/${taskToEdit._id}`, payload);
-        toast.success('Task updated!');
+        toast.success(`✏️ "${payload.title}" updated successfully`);
       } else {
         await api.post('/tasks', payload);
-        toast.success('Task created!');
+        toast.success(`✅ "${payload.title}" created!`);
       }
       onSuccess();
       onClose();
     } catch (error) {
-      const msg = error.response?.data?.message || 'Something went wrong';
+      const msg = error.response?.data?.message || 'Something went wrong. Please try again.';
       toast.error(msg);
     } finally {
       setLoading(false);
@@ -86,6 +84,7 @@ function TaskForm({ taskToEdit, onSuccess, onClose }) {
               onChange={handleChange}
               required
               autoFocus
+              disabled={loading}
             />
           </div>
 
@@ -98,6 +97,7 @@ function TaskForm({ taskToEdit, onSuccess, onClose }) {
               value={formData.description}
               onChange={handleChange}
               rows={3}
+              disabled={loading}
             />
           </div>
 
@@ -109,6 +109,7 @@ function TaskForm({ taskToEdit, onSuccess, onClose }) {
                 name="status"
                 value={formData.status}
                 onChange={handleChange}
+                disabled={loading}
               >
                 <option value="todo">To Do</option>
                 <option value="in-progress">In Progress</option>
@@ -124,16 +125,24 @@ function TaskForm({ taskToEdit, onSuccess, onClose }) {
                 name="dueDate"
                 value={formData.dueDate}
                 onChange={handleChange}
+                disabled={loading}
               />
             </div>
           </div>
 
           <div className="modal-actions">
-            <button type="button" className="btn-secondary" onClick={onClose}>
+            <button type="button" className="btn-secondary" onClick={onClose} disabled={loading}>
               Cancel
             </button>
-            <button type="submit" className="btn-primary" disabled={loading}>
-              {loading ? 'Saving...' : isEdit ? 'Save Changes' : 'Create Task'}
+            <button type="submit" className="btn-primary btn-with-spinner" disabled={loading}>
+              {loading ? (
+                <>
+                  <span className="btn-spinner" />
+                  {isEdit ? 'Saving...' : 'Creating...'}
+                </>
+              ) : (
+                isEdit ? 'Save Changes' : 'Create Task'
+              )}
             </button>
           </div>
         </form>

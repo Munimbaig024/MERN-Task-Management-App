@@ -17,6 +17,17 @@ const SORT_OPTIONS = [
   { value: 'dueDate_desc', label: 'Due Date ↓' },
 ];
 
+// Skeleton card shown while fetching
+function SkeletonCard() {
+  return (
+    <div className="skeleton-card" aria-hidden="true">
+      <div className="skeleton-line skeleton-line--title" />
+      <div className="skeleton-line skeleton-line--short" />
+      <div className="skeleton-line skeleton-line--xshort" />
+    </div>
+  );
+}
+
 function TaskList({ onEdit, onDelete, refreshTrigger }) {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -44,7 +55,7 @@ function TaskList({ onEdit, onDelete, refreshTrigger }) {
       setTotalTasks(data.totalTasks);
       setPage(currentPage);
     } catch (error) {
-      toast.error('Failed to load tasks');
+      toast.error('Failed to load tasks. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -77,6 +88,7 @@ function TaskList({ onEdit, onDelete, refreshTrigger }) {
               key={opt.value}
               className={`filter-status-btn${statusFilter === opt.value ? ' active' : ''}`}
               onClick={() => handleStatusChange(opt.value)}
+              disabled={loading}
             >
               {opt.label}
             </button>
@@ -89,6 +101,7 @@ function TaskList({ onEdit, onDelete, refreshTrigger }) {
             className="filter-sort-select"
             value={sortBy}
             onChange={handleSortChange}
+            disabled={loading}
           >
             {SORT_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -105,7 +118,12 @@ function TaskList({ onEdit, onDelete, refreshTrigger }) {
       )}
 
       {loading ? (
-        <p className="placeholder-text">Loading tasks...</p>
+        // Skeleton placeholders
+        <div className="task-list" aria-label="Loading tasks">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <SkeletonCard key={i} />
+          ))}
+        </div>
       ) : tasks.length === 0 ? (
         <div className="empty-state">
           <p>{statusFilter !== 'all' ? 'No tasks match this filter.' : 'No tasks yet.'}</p>

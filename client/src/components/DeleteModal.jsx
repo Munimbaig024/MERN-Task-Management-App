@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
 import api from '../api/axiosInstance';
 import toast from 'react-hot-toast';
-import { useAuth } from '../context/AuthContext';
 
 function DeleteModal({ task, onSuccess, onClose }) {
-  const { token } = useAuth();
   const [loading, setLoading] = useState(false);
 
   const handleDelete = async () => {
     setLoading(true);
     try {
       await api.delete(`/tasks/${task._id}`);
-      toast.success('Task deleted');
+      toast.success(`🗑️ "${task.title}" deleted`);
       onSuccess();
       onClose();
     } catch (error) {
-      const msg = error.response?.data?.message || 'Failed to delete task';
+      const msg = error.response?.data?.message || 'Failed to delete task. Please try again.';
       toast.error(msg);
     } finally {
       setLoading(false);
@@ -41,8 +39,15 @@ function DeleteModal({ task, onSuccess, onClose }) {
           <button className="btn-secondary" onClick={onClose} disabled={loading}>
             Cancel
           </button>
-          <button className="btn-danger" onClick={handleDelete} disabled={loading}>
-            {loading ? 'Deleting...' : 'Delete Task'}
+          <button className="btn-danger btn-with-spinner" onClick={handleDelete} disabled={loading}>
+            {loading ? (
+              <>
+                <span className="btn-spinner btn-spinner--light" />
+                Deleting...
+              </>
+            ) : (
+              'Delete Task'
+            )}
           </button>
         </div>
       </div>
