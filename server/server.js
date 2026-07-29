@@ -11,8 +11,16 @@ connectDB();
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// CORS — restrict origin in production via CLIENT_ORIGIN env var
+const corsOptions = {
+  origin: process.env.CLIENT_ORIGIN || 'http://localhost:3000',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+};
+app.use(cors(corsOptions));
+
+// Body parsers
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -22,7 +30,11 @@ app.use('/api/tasks', require('./routes/taskRoutes'));
 
 // Health check route
 app.get('/', (req, res) => {
-  res.json({ message: 'TaskFlow API is running' });
+  res.json({
+    message: 'TaskFlow API is running',
+    env: process.env.NODE_ENV || 'development',
+    version: '1.0.0',
+  });
 });
 
 // Error handling middleware (must be last)
@@ -32,7 +44,7 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
 });
 
 module.exports = app;

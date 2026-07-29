@@ -1,6 +1,33 @@
+# Dependencies
 node_modules/
+
+# Environment variables (NEVER commit real .env files)
 .env
+.env.local
+.env.production
+
+# Build outputs
 dist/
 build/
-.DS_Store
+client/dist/
 
+# Test coverage
+coverage/
+.nyc_output/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE / editor
+.vscode/
+.idea/
+
+# Project planning files (local only)
+Commit_Plan.md
+TaskFlow-Design-Doc.md
+project_handoff.md
